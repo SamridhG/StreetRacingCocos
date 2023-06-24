@@ -18,7 +18,7 @@ export class ResourceManager {
                resources.loadDir(path,SpriteFrame,(finish,total)=>{
                 let percentage=(finish/total)/2;
                
-                console.log(percentage,"%");
+                
                 PercentageUpdater.getComponent(ProgressBar).progress=percentage;
                },(error,asset)=>{
               
@@ -32,10 +32,11 @@ export class ResourceManager {
                resources.loadDir(path,SpriteFrame,(finish,total)=>{
                 PercentageUpdater.getComponent(ProgressBar).progress+=((finish/total)/2-percentage);
                 percentage=(finish/total)/2;
-                console.log(PercentageUpdater.getComponent(ProgressBar).progress,"%")
+               
                },(error,asset)=>{
                
                           this.CarSpriteFrame=asset;
+                          callback();
                })
     }
 }
