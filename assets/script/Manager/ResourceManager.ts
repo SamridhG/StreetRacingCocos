@@ -13,18 +13,31 @@ export class ResourceManager {
            }
            return ResourceManager.Instance
     }
-    spriteAssetLoad(path:string,PercentageUpdater:Node){
-        console.log("Asset Load Function")
+    spriteAssetLoad(path:string,PercentageUpdater:Node,callback){
+      
                resources.loadDir(path,SpriteFrame,(finish,total)=>{
-                let percentage=finish/total;
+                let percentage=(finish/total)/2;
+               
                 console.log(percentage,"%");
                 PercentageUpdater.getComponent(ProgressBar).progress=percentage;
                },(error,asset)=>{
-                console.log("Updated Asset",asset);
+              
                           this.SpriteFrameArray=asset;
+                          callback();
                })
     }
-   
+    carAssetLoad(path:string,PercentageUpdater:Node,callback){
+       
+        let percentage=0;
+               resources.loadDir(path,SpriteFrame,(finish,total)=>{
+                PercentageUpdater.getComponent(ProgressBar).progress+=((finish/total)/2-percentage);
+                percentage=(finish/total)/2;
+                console.log(PercentageUpdater.getComponent(ProgressBar).progress,"%")
+               },(error,asset)=>{
+               
+                          this.CarSpriteFrame=asset;
+               })
+    }
 }
 
 

@@ -9,9 +9,11 @@ export class Loading extends Component {
     ResourceLoad:ResourceManager=null;
     start() {
         this.ResourceLoad=ResourceManager.getInstance();
-        this.ResourceLoad.spriteAssetLoad("Texture",this.ProgressBar);
+        this.ResourceLoad.spriteAssetLoad("Texture",this.ProgressBar,()=>{this.carAssetLoad()});
     }
-
+    carAssetLoad=()=>{
+        this.ResourceLoad.carAssetLoad("Car",this.ProgressBar,()=>{});
+    }
     update(deltaTime: number) {
         
     }
