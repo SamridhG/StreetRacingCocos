@@ -1,6 +1,7 @@
 import { _decorator, Component, instantiate, Node, PageView, Prefab } from 'cc';
 import { ResourceManager } from '../Manager/ResourceManager';
 import { CarView } from '../Car/CarView';
+import { PlayerInfo } from '../Player/PlayerInfo';
 const { ccclass, property } = _decorator;
 
 @ccclass('Loading')
@@ -11,11 +12,14 @@ export class Loading extends Component {
     @property({type:Prefab}) ListCar:Prefab=null;
     @property({type:Node}) ListBase:Node=null;
     ResourceLoad:ResourceManager=null;
+    PlayerInfo:PlayerInfo=null;
     start() {
         this.ResourceLoad=ResourceManager.getInstance();
+        this.PlayerInfo=PlayerInfo.getInstance();
         this.ResourceLoad.spriteAssetLoad("Texture",this.ProgressBar,()=>{
             this.carAssetLoad()
         });
+       
     }
     carAssetLoad=()=>{
         this.ResourceLoad.carAssetLoad("Car",this.ProgressBar,()=>{
@@ -42,7 +46,20 @@ export class Loading extends Component {
           }
     }  
     onClickSelectButton(){
-        console.log("Car Selected",this.ResourceLoad.CarSpriteFrame[this.ListBase.getComponent(PageView).getCurrentPageIndex()].name);
+      //  console.log("Car Selected",this.ResourceLoad.CarSpriteFrame[this.ListBase.getComponent(PageView).getCurrentPageIndex()].name);
+        this.PlayerInfo.setMyCar(this.ResourceLoad.CarSpriteFrame[this.ListBase.getComponent(PageView).getCurrentPageIndex()].name)
+    }
+
+    onClickLeftArrow(){
+         let currentindex=this.ListBase.getComponent(PageView).getCurrentPageIndex()-1 
+         this.scroll(currentindex);
+    }
+    onClickRightArrow(){     
+         let currentindex=this.ListBase.getComponent(PageView).getCurrentPageIndex()+1 
+           this.scroll(currentindex);
+    }
+    scroll(currentindex){
+        this.ListBase.getComponent(PageView).scrollToPage(currentindex,0.3);
     }
     update(deltaTime: number) {
     }

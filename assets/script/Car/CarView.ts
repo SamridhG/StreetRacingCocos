@@ -8,6 +8,9 @@ export class CarView extends Component {
     start() {
 
     }
+    myInfo(){
+        return this;
+    }
    setSprite(spriteframe:SpriteFrame){
     this.Car.getComponent(Sprite).spriteFrame=spriteframe;
    }
