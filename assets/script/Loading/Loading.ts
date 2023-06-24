@@ -41,8 +41,10 @@ export class Loading extends Component {
             this.ListBase.getComponent(PageView).addPage(Car);
           }
     }  
+    onClickSelectButton(){
+        console.log("Car Selected",this.ResourceLoad.CarSpriteFrame[this.ListBase.getComponent(PageView).getCurrentPageIndex()].name);
+    }
     update(deltaTime: number) {
-        
     }
 }
 
