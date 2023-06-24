@@ -5,6 +5,7 @@ const { ccclass, property } = _decorator;
 export class ResourceManager {
     private static Instance:ResourceManager=null;
     SpriteFrameArray:SpriteFrame[]=null;
+    CarSpriteFrame:SpriteFrame[]=null;
     private ResourceManager(){}
       static  getInstance():ResourceManager{
            if(!ResourceManager.Instance){
