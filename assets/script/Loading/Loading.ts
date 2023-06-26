@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, PageView, Prefab } from 'cc';
+import { _decorator, Component, director, instantiate, Node, PageView, Prefab } from 'cc';
 import { ResourceManager } from '../Manager/ResourceManager';
 import { CarView } from '../Car/CarView';
 import { PlayerInfo } from '../Player/PlayerInfo';
@@ -19,7 +19,7 @@ export class Loading extends Component {
         this.ResourceLoad.spriteAssetLoad("Texture",this.ProgressBar,()=>{
             this.carAssetLoad()
         });
-       
+       director.preloadScene("Gameplay");
     }
     carAssetLoad=()=>{
         this.ResourceLoad.carAssetLoad("Car",this.ProgressBar,()=>{
@@ -48,6 +48,7 @@ export class Loading extends Component {
     onClickSelectButton(){
       //  console.log("Car Selected",this.ResourceLoad.CarSpriteFrame[this.ListBase.getComponent(PageView).getCurrentPageIndex()].name);
         this.PlayerInfo.setMyCar(this.ResourceLoad.CarSpriteFrame[this.ListBase.getComponent(PageView).getCurrentPageIndex()].name)
+        this.loadScene();
     }
 
     onClickLeftArrow(){
@@ -62,6 +63,9 @@ export class Loading extends Component {
         this.ListBase.getComponent(PageView).scrollToPage(currentindex,0.3);
     }
     update(deltaTime: number) {
+    }
+    loadScene(){
+        director.loadScene("Gameplay");
     }
 }
 

@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator;
 export class Track extends Component {
     @property({type:Node})TrackNode:Node[]=[];
     TrackHeight:number=null;
-    Speed:number=150;
+    Speed:number=8;
     ResetPosition:Vec3=null;
     start() {
         this.TrackHeight=this.node.getComponent(UITransform).height;
