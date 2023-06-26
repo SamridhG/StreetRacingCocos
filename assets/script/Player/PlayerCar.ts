@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Sprite } from 'cc';
+import { _decorator, Component, Node, Sprite, tween } from 'cc';
 import { ResourceManager } from '../Manager/ResourceManager';
 import { PlayerInfo } from './PlayerInfo';
 const { ccclass, property } = _decorator;
@@ -15,10 +15,13 @@ export class PlayerCar extends Component {
         this.ResourceLoad=ResourceManager.getInstance();
         this.PlayerInfo=PlayerInfo.getInstance();
         this.updateSprite();
+        this.carStartPosition()
     }
     updateSprite(){ 
-        this.Car.getComponent(Sprite).spriteFrame=this.ResourceLoad.getCar(this.PlayerInfo.MyCar); 
-        
+        this.Car.getComponent(Sprite).spriteFrame=this.ResourceLoad.getCar(this.PlayerInfo.MyCar);  
+    }
+    carStartPosition(){
+        tween(this.Car).to(1.5,{position:this.MiddleNode.getPosition()}).start();
     }
     start() {
         
