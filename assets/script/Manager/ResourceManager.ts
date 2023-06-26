@@ -39,6 +39,12 @@ export class ResourceManager {
                           callback();
                })
     }
+
+    getCar(CarName:string){
+        return this.CarSpriteFrame.find((car)=>{
+             return car.name==CarName;
+        })
+    }
 }
 
 
