@@ -28,32 +28,33 @@ export class PlayerCar extends Component {
             this.Canvas.getComponent(Gameplay).registerEvent();
         }).start();
     }
-    setPositionCar(number){
+    setPositionCar(number,angle){
         switch (number){
             case CarLane.Left:
-                this.setCarPositionLeft();
+                this.setCarPositionLeft(angle);
                 break;
             case CarLane.Middle:
-                this.setCarPositionMiddle();
+                this.setCarPositionMiddle(angle);
                 break;
             case CarLane.Right:
-                this.setCarPositionRight();
+                this.setCarPositionRight(angle);
                 break;
 
         }
     }
-    setCarPositionLeft(){
+    setCarPositionLeft(angle){
     // this.Car.setPosition(this.LeftNode.getPosition())
-    this.Car.angle=30;
+    this.Car.angle=angle;
     tween(this.Car).to(0.1,{position:this.LeftNode.getPosition()}).call(()=>{ this.Car.angle=0;}).start();
     }
-    setCarPositionRight(){
+    setCarPositionRight(angle){
        // this.Car.setPosition(this.RightNode.getPosition())
-       this.Car.angle=-30;
+       this.Car.angle=angle;
         tween(this.Car).to(0.1,{position:this.RightNode.getPosition()}).call(()=>{ this.Car.angle=0;}).start();
     }
-    setCarPositionMiddle(){
-        tween(this.Car).to(0.1,{position:this.MiddleNode.getPosition()}).start();
+    setCarPositionMiddle(angle){
+        this.Car.angle=angle;
+        tween(this.Car).to(0.1,{position:this.MiddleNode.getPosition()}).call(()=>{ this.Car.angle=0;}).start();
        // this.Car.setPosition(this.MiddleNode.getPosition())
     }
     start() {

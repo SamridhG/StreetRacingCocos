@@ -22,19 +22,24 @@ registerEvent(){
 }
 touchCancel(event){
     this.TouchEndPosition=event.getLocation();
+    let angle;
     if(this.TouchEndPosition.x-this.TouchStartPosition.x>0){
           this.CarLane++;
+          angle=-30;
           if(this.CarLane>1){
             this.CarLane=1;
+            angle=0;
           }
          
     }else if(this.TouchEndPosition.x-this.TouchStartPosition.x<0){
         this.CarLane--;
+        angle=30;
         if(this.CarLane<-1){
           this.CarLane=-1;
+         angle=0;
         }
     }
-    this.CarRoot.getComponent(PlayerCar).setPositionCar(this.CarLane);
+    this.CarRoot.getComponent(PlayerCar).setPositionCar(this.CarLane,angle);
 }
 touchStart(event){
     this.TouchStartPosition=event.getLocation();
