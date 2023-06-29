@@ -2,6 +2,7 @@ import { _decorator, Component, lerp, Node, Script, Sprite, tween, Vec3 } from '
 import { ResourceManager } from '../Manager/ResourceManager';
 import { PlayerInfo } from './PlayerInfo';
 import { Gameplay } from '../Gameplay/Gameplay';
+import { CarLane } from '../constant/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerCar')
@@ -29,13 +30,13 @@ export class PlayerCar extends Component {
     }
     setPositionCar(number){
         switch (number){
-            case -1:
+            case CarLane.Left:
                 this.setCarPositionLeft();
                 break;
-            case 0:
+            case CarLane.Middle:
                 this.setCarPositionMiddle();
                 break;
-            case 1:
+            case CarLane.Right:
                 this.setCarPositionRight();
                 break;
 
