@@ -10,6 +10,7 @@ export class Gameplay extends Component {
     @property({type:Node})EnemeyCar=null;
     TouchStartPosition;
     TouchEndPosition;
+    distance=20;
     start() {
 
     }
@@ -24,23 +25,24 @@ registerEvent(){
 touchCancel(event){
     this.TouchEndPosition=event.getLocation();
     let angle;
-    if(this.TouchEndPosition.x-this.TouchStartPosition.x>0){
+    if(this.TouchEndPosition.x-this.TouchStartPosition.x>this.distance){
           this.CarLane++;
           angle=-30;
           if(this.CarLane>1){
             this.CarLane=1;
             angle=0;
           }
-         
-    }else if(this.TouchEndPosition.x-this.TouchStartPosition.x<0){
+          this.CarRoot.getComponent(PlayerCar).setPositionCar(this.CarLane,angle);
+    }else if(this.TouchEndPosition.x-this.TouchStartPosition.x<-this.distance){
         this.CarLane--;
         angle=30;
         if(this.CarLane<-1){
           this.CarLane=-1;
          angle=0;
         }
+        this.CarRoot.getComponent(PlayerCar).setPositionCar(this.CarLane,angle);
     }
-    this.CarRoot.getComponent(PlayerCar).setPositionCar(this.CarLane,angle);
+   
 }
 touchStart(event){
     this.TouchStartPosition=event.getLocation();
