@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, NodePool, Prefab, Sprite, UITransform } from 'cc';
+import { _decorator, Component, director, game, instantiate, Node, NodePool, Prefab, Sprite, UITransform } from 'cc';
 import { ResourceManager } from '../Manager/ResourceManager';
 const { ccclass, property } = _decorator;
 
@@ -8,6 +8,8 @@ export class EnemyCars extends Component {
     EnemyCarPrefab:Prefab=null;
     @property({type:Node})
     EnemyCarPositions:Node[]=[]
+    @property({type:Node})
+    PlayerCar:Node=null;
     Init:boolean=false;
     speed=300;
     distance=900;
@@ -32,24 +34,39 @@ export class EnemyCars extends Component {
   initEnemyCars=()=>{
        this.Init=true;    
   }
+collisionDetection(){
+let CarRect=this.PlayerCar.getComponent(UITransform).getBoundingBoxToWorld();
+this.node.children.forEach(child=>{
+     let ChildRect=child.getComponent(UITransform).getBoundingBoxToWorld();
+     if(CarRect.intersects(ChildRect)){
+          console.log("Collison Occurs");
+          game.end()
+     }
+})
 
+}
+EnemyCarsPositionUpdate(deltaTime){
+     this.node.children.forEach((child)=>{
+          let childpos=child.getPosition();
+          let NodeSpacePosY=-this.node.getComponent(UITransform).height*0.5-child.getComponent(UITransform).height;
+          if(childpos.y<=NodeSpacePosY){
+             child.destroy();
+          }else{
+             childpos.y=childpos.y-(this.speed*deltaTime);
+             child.setPosition(childpos);
+          }
+   })
+ 
+}
     update(deltaTime: number){
      this.dt=deltaTime
       if(this.Init==true && this.InitTime<=0){
            this.AddEnemy();
       }
       this.InitTime--;
-      this.node.children.forEach((child)=>{
-             let childpos=child.getPosition();
-             let NodeSpacePosY=-this.node.getComponent(UITransform).height*0.5-child.getComponent(UITransform).height;
-             if(childpos.y<=NodeSpacePosY){
-                child.destroy();
-             }else{
-                childpos.y=childpos.y-(this.speed*deltaTime);
-                child.setPosition(childpos);
-             }
-      })
-    }
+      this.EnemyCarsPositionUpdate(deltaTime)
+      this.collisionDetection()
+     } 
 }
 
 
